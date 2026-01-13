@@ -369,18 +369,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 13004735}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &13004755 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8170363056176214048, guid: f81e8172c337a714894d6fdbd0900d8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 13004735}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &13004756 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3521898391505505686, guid: f81e8172c337a714894d6fdbd0900d8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 13004735}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &13004757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3551960246506442466, guid: f81e8172c337a714894d6fdbd0900d8d,
@@ -709,7 +697,7 @@ MonoBehaviour:
   blueprintId: avtr_14a07628-b7a2-474f-b0cc-411dd6975e6d
   contentType: 0
   assetBundleUnityVersion: 
-  fallbackStatus: 1
+  fallbackStatus: 3
 --- !u!114 &13004763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,7 +777,7 @@ MonoBehaviour:
   foldout_gizmos: 0
   version: 0
   integrationType: 0
-  rootTransform: {fileID: 13004756}
+  rootTransform: {fileID: 1131343037}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
   endpointPosition: {x: 0, y: 0, z: 0}
@@ -968,6 +956,12 @@ MonoBehaviour:
   showGizmos: 1
   boneOpacity: 0.5
   limitOpacity: 0.5
+--- !u!4 &119962216 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1627119347807071144, guid: f81e8172c337a714894d6fdbd0900d8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1072297707}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &131479781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1292,7 @@ MonoBehaviour:
   foldout_gizmos: 0
   version: 0
   integrationType: 0
-  rootTransform: {fileID: 827687381}
+  rootTransform: {fileID: 119962216}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
   endpointPosition: {x: 0, y: 0, z: 0}
@@ -7260,7 +7254,7 @@ MonoBehaviour:
   foldout_gizmos: 0
   version: 0
   integrationType: 0
-  rootTransform: {fileID: 13004755}
+  rootTransform: {fileID: 2100017437}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
   endpointPosition: {x: 0, y: 0, z: 0}
@@ -7501,12 +7495,6 @@ MonoBehaviour:
 --- !u!4 &805591798 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8211682993464967936, guid: f81e8172c337a714894d6fdbd0900d8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1072297707}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &827687381 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3521898391505505686, guid: f81e8172c337a714894d6fdbd0900d8d,
     type: 3}
   m_PrefabInstance: {fileID: 1072297707}
   m_PrefabAsset: {fileID: 0}
@@ -8463,6 +8451,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1072297707}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1131343037 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1627119347807071144, guid: f81e8172c337a714894d6fdbd0900d8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 13004735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1138958959
 GameObject:
   m_ObjectHideFlags: 0
@@ -8532,7 +8526,14 @@ MonoBehaviour:
             objRef: {fileID: 9100000, guid: aa796151416f44d5895103be436cf3a1, type: 2}
           type: 5
         menus: []
-        prms: []
+        prms:
+        - parameters:
+            version: 1
+            fileID: 0
+            guid: 
+            id: 5d8796c02bba941bc9d439c67301b1cc|Assets/GhostIAm/DreamBite/Demo/Robot
+              Avatar FT/Robot Avatar FT.asset
+            objRef: {fileID: 11400000, guid: 5d8796c02bba941bc9d439c67301b1cc, type: 2}
         smoothedPrms: []
         globalParams:
         - '*'
@@ -9274,12 +9275,6 @@ Transform:
   - {fileID: 277755984}
   m_Father: {fileID: 644658244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1710450270 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8170363056176214048, guid: f81e8172c337a714894d6fdbd0900d8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1072297707}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1753398465
 GameObject:
   m_ObjectHideFlags: 0
@@ -9462,7 +9457,14 @@ MonoBehaviour:
             objRef: {fileID: 9100000, guid: aa796151416f44d5895103be436cf3a1, type: 2}
           type: 5
         menus: []
-        prms: []
+        prms:
+        - parameters:
+            version: 1
+            fileID: 0
+            guid: 
+            id: 5d8796c02bba941bc9d439c67301b1cc|Assets/GhostIAm/DreamBite/Demo/Robot
+              Avatar FT/Robot Avatar FT.asset
+            objRef: {fileID: 11400000, guid: 5d8796c02bba941bc9d439c67301b1cc, type: 2}
         smoothedPrms: []
         globalParams:
         - '*'
@@ -14351,6 +14353,12 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!4 &2035856685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5805075194203553122, guid: f81e8172c337a714894d6fdbd0900d8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1072297707}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2059984279
 GameObject:
   m_ObjectHideFlags: 0
@@ -14405,7 +14413,7 @@ MonoBehaviour:
   foldout_gizmos: 0
   version: 0
   integrationType: 0
-  rootTransform: {fileID: 1710450270}
+  rootTransform: {fileID: 2035856685}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
   endpointPosition: {x: 0, y: 0, z: 0}
@@ -14584,6 +14592,12 @@ MonoBehaviour:
   showGizmos: 1
   boneOpacity: 0.5
   limitOpacity: 0.5
+--- !u!4 &2100017437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5805075194203553122, guid: f81e8172c337a714894d6fdbd0900d8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 13004735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2116690508
 GameObject:
   m_ObjectHideFlags: 0
