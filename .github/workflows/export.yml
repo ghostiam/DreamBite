@@ -1,0 +1,36 @@
+name: Export Unity Package
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          # install rsync
+          sudo apt-get update && sudo apt-get install rsync -y
+          
+          mkdir -p Assets/GhostIAm/DreamBite
+          rsync -a --exclude Assets * ./Assets/GhostIAm/DreamBite
+          printf "fileFormatVersion: 2\nguid: e11b5888f395e5148ad8a63f9997e36b\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > ./Assets/GhostIAm.meta
+          printf "fileFormatVersion: 2\nguid: 8b6d297d99f24fd7bfb0c3b8c6ca3c5d\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > ./Assets/GhostIAm/DreamBite.meta
+          echo "Assets/GhostIAm.meta" > metaList
+          echo "Assets/GhostIAm/DreamBite.meta" > metaList
+          ls -la "Assets/GhostIAm/DreamBite/"
+          find Assets/GhostIAm/DreamBite/ -name \*.meta >> metaList
+          cat metaList
+
+      - run: mkdir export
+
+      - uses: pCYSl5EDgo/create-unitypackage@master
+        with:
+          package-path: 'export/DreamBite.unitypackage'
+          include-files: metaList
+
+      - uses: actions/upload-artifact@master
+        with:
+          path: export
+          name: DreamBite
