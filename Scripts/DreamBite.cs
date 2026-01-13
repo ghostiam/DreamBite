@@ -26,6 +26,7 @@ namespace GhostIAm.DreamBite
 
         private Vector3 _cachedPosition;
         private Quaternion _cachedRotation;
+        private VRCAvatarDescriptor.ColliderConfig _cachedHandCollider;
 
         public enum Hand
         {
@@ -42,17 +43,40 @@ namespace GhostIAm.DreamBite
 
         private void OnDrawGizmosSelected()
         {
-            if (_cachedPosition == transform.position && _cachedRotation == transform.rotation)
+            var avatar = GetAvatar();
+            if (!avatar) return;
+
+            var isRightHand = hand == Hand.Right;
+            var handCollider = isRightHand ? avatar.collider_handR : avatar.collider_handL;
+
+            var skipUpdate = _cachedPosition == transform.position &&
+                             _cachedRotation == transform.rotation &&
+                             _cachedHandCollider.transform == handCollider.transform &&
+                             _cachedHandCollider.position == handCollider.position &&
+                             _cachedHandCollider.rotation == handCollider.rotation &&
+                             Mathf.Approximately(_cachedHandCollider.height, handCollider.height) &&
+                             Mathf.Approximately(_cachedHandCollider.radius, handCollider.radius)
+                ;
+
+            if (skipUpdate)
                 return;
+
+            _cachedPosition = transform.position;
+            _cachedRotation = transform.rotation;
+            _cachedHandCollider = new VRCAvatarDescriptor.ColliderConfig
+            {
+                transform = handCollider.transform,
+                position = handCollider.position,
+                rotation = handCollider.rotation,
+                height = handCollider.height,
+                radius = handCollider.radius,
+            };
 
             UpdateSettings();
         }
 
         private void UpdateSettings()
         {
-            _cachedPosition = transform.position;
-            _cachedRotation = transform.rotation;
-
             var avatar = GetAvatar();
             if (!avatar) return;
 
@@ -60,6 +84,8 @@ namespace GhostIAm.DreamBite
             if (!animator) return;
 
             var isRightHand = hand == Hand.Right;
+            var handCollider = isRightHand ? avatar.collider_handR : avatar.collider_handL;
+
             var handBone = isRightHand ? HumanBodyBones.RightHand : HumanBodyBones.LeftHand;
             var handTransform = animator.GetBoneTransform(handBone);
 
@@ -71,7 +97,6 @@ namespace GhostIAm.DreamBite
 
             var scale = VRCAvatarDescriptor.MaxScale(handTransform.lossyScale);
 
-            var handCollider = isRightHand ? avatar.collider_handR : avatar.collider_handL;
             var handColliderHeight = handCollider.height * scale;
             var handColliderRadius = handCollider.radius * scale;
 
