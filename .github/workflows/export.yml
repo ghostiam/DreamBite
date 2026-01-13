@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload artifact (Gitea)
         if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == 'true' }}
-        uses: https://github.com/christopherHX/gitea-upload-artifact@v4
+        uses: christopherHX/gitea-upload-artifact@v4
         with:
           path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
           name: ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}
