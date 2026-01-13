@@ -43,8 +43,8 @@ jobs:
           # Copy all files except Assets folder. 
           rsync -a --exclude Assets * "./$PACKAGE_ASSETS_PATH"
           
-          printf "fileFormatVersion: 2\nguid: $AUTHOR_NAME_GUID\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > "./$AUTHOR_ASSETS_PATH.meta"
-          printf "fileFormatVersion: 2\nguid: $PACKAGE_NAME_GUID\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > "./$PACKAGE_ASSETS_PATH.meta"
+          printf "fileFormatVersion: 2\nguid: $AUTHOR_NAME_GUID\nfolderAsset: yes" > "./$AUTHOR_ASSETS_PATH.meta"
+          printf "fileFormatVersion: 2\nguid: $PACKAGE_NAME_GUID\nfolderAsset: yes" > "./$PACKAGE_ASSETS_PATH.meta"
           echo "Assets/$AUTHOR_NAME.meta" > metaList
           echo "$PACKAGE_ASSETS_PATH.meta" >> metaList
           echo "$VERSION" > "$PACKAGE_ASSETS_PATH/version.txt"
@@ -55,25 +55,25 @@ jobs:
 
       - uses: pCYSl5EDgo/create-unitypackage@master
         with:
-          package-path: "${{ env.PACKAGE_NAME }}.unitypackage"
+          package-path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
           include-files: metaList
 
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: "${{ env.PACKAGE_NAME }}.unitypackage"
+          files: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
           draft: true
 
       - name: Upload artifact (Gitea)
         if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == 'true' }}
         uses: https://github.com/christopherHX/gitea-upload-artifact@v4
         with:
-          path: "${{ env.PACKAGE_NAME }}.unitypackage"
-          name: ${{ env.PACKAGE_NAME }}
+          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          name: ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}
 
       - name: Upload artifact (GitHub)
         if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == '' }}
         uses: actions/upload-artifact@v4
         with:
-          path: "${{ env.PACKAGE_NAME }}.unitypackage"
-          name: ${{ env.PACKAGE_NAME }}
+          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          name: ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}
