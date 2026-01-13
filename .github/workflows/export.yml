@@ -2,35 +2,78 @@ name: Export Unity Package
 
 on:
   push:
-    branches: [ master ]
+    tags:
+      - "v*.*.*"
+    branches:
+      - master
 
 jobs:
   export:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          # install rsync
-          sudo apt-get update && sudo apt-get install rsync -y
-          
-          mkdir -p Assets/GhostIAm/DreamBite
-          rsync -a --exclude Assets * ./Assets/GhostIAm/DreamBite
-          printf "fileFormatVersion: 2\nguid: e11b5888f395e5148ad8a63f9997e36b\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > ./Assets/GhostIAm.meta
-          printf "fileFormatVersion: 2\nguid: 8b6d297d99f24fd7bfb0c3b8c6ca3c5d\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > ./Assets/GhostIAm/DreamBite.meta
-          echo "Assets/GhostIAm.meta" > metaList
-          echo "Assets/GhostIAm/DreamBite.meta" > metaList
-          ls -la "Assets/GhostIAm/DreamBite/"
-          find Assets/GhostIAm/DreamBite/ -name \*.meta >> metaList
-          cat metaList
 
-      - run: mkdir export
+      - name: Environment variables
+        run: |
+          AUTHOR_NAME="GhostIAm"
+          AUTHOR_NAME_GUID="e11b5888f395e5148ad8a63f9997e36b"
+          PACKAGE_NAME="DreamBite"
+          PACKAGE_NAME_GUID="8b6d297d99f24fd7bfb0c3b8c6ca3c5d"
+          VERSION=$GITHUB_REF_NAME-$(git rev-parse --short "$GITHUB_SHA")
+          
+          # Export variables for use in other steps
+          echo "AUTHOR_NAME=$AUTHOR_NAME" >> $GITHUB_ENV
+          echo "AUTHOR_NAME_GUID=$AUTHOR_NAME_GUID" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+          echo "PACKAGE_NAME_GUID=$PACKAGE_NAME_GUID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Install rsync if not already installed
+        run: |
+          if ! command -v rsync &> /dev/null; then
+            sudo apt-get update && sudo apt-get install rsync -y
+          fi
+
+      - name: Prepare assets
+        run: |
+          AUTHOR_ASSETS_PATH="Assets/$AUTHOR_NAME"
+          PACKAGE_ASSETS_PATH="Assets/$AUTHOR_NAME/$PACKAGE_NAME"
+          
+          mkdir -p "$PACKAGE_ASSETS_PATH"
+          # Copy all files except Assets folder. 
+          rsync -a --exclude Assets * "./$PACKAGE_ASSETS_PATH"
+          
+          printf "fileFormatVersion: 2\nguid: $AUTHOR_NAME_GUID\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > "./$AUTHOR_ASSETS_PATH.meta"
+          printf "fileFormatVersion: 2\nguid: $PACKAGE_NAME_GUID\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: " > "./$PACKAGE_ASSETS_PATH.meta"
+          echo "Assets/$AUTHOR_NAME.meta" > metaList
+          echo "$PACKAGE_ASSETS_PATH.meta" >> metaList
+          echo "$VERSION" > "$PACKAGE_ASSETS_PATH/version.txt"
+          find "$PACKAGE_ASSETS_PATH/" -name \*.meta >> metaList
+          
+          ls -la "$PACKAGE_ASSETS_PATH/"
+          cat metaList
 
       - uses: pCYSl5EDgo/create-unitypackage@master
         with:
-          package-path: 'export/DreamBite.unitypackage'
+          package-path: "${{ env.PACKAGE_NAME }}.unitypackage"
           include-files: metaList
 
-      - uses: actions/upload-artifact@master
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          path: export
-          name: DreamBite
+          files: "${{ env.PACKAGE_NAME }}.unitypackage"
+          draft: true
+
+      - name: Upload artifact (Gitea)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == 'true' }}
+        uses: https://github.com/christopherHX/gitea-upload-artifact@v4
+        with:
+          path: "${{ env.PACKAGE_NAME }}.unitypackage"
+          name: ${{ env.PACKAGE_NAME }}
+
+      - name: Upload artifact (GitHub)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          path: "${{ env.PACKAGE_NAME }}.unitypackage"
+          name: ${{ env.PACKAGE_NAME }}
