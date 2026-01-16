@@ -16,6 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: 'DreamBiteApp~/go.mod'
+      - run: go version
+
       - name: Environment variables
         run: |
           AUTHOR_NAME="GhostIAm"
@@ -31,10 +36,13 @@ jobs:
           echo "PACKAGE_NAME_GUID=$PACKAGE_NAME_GUID" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Install rsync if not already installed
+      - name: Install rsync and zip if not already installed
         run: |
           if ! command -v rsync &> /dev/null; then
             sudo apt-get update && sudo apt-get install rsync -y
+          fi
+          if ! command -v zip &> /dev/null; then
+            sudo apt-get update && sudo apt-get install zip -y
           fi
 
       - name: Prepare assets
@@ -55,28 +63,40 @@ jobs:
           
           ls -la "$PACKAGE_ASSETS_PATH/"
           cat metaList
+          
+          mkdir export
 
       - uses: pCYSl5EDgo/create-unitypackage@master
         with:
-          package-path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          package-path: "export/${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
           include-files: metaList
+          
+      - name: Build DreamBiteApp
+        run: |
+          cd ./DreamBiteApp~
+          GOOS=windows GOARCH=amd64 go build -o ../export/DreamBiteApp.exe .
+
+      - name: Compress files to zip
+        run: |
+          cd export/
+          zip -r "../${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.zip" "."
 
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          files: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.zip"
           draft: true
 
       - name: Upload artifact (Gitea)
         if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == 'true' }}
         uses: christopherHX/gitea-upload-artifact@v4
         with:
-          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.zip"
           name: ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}
 
       - name: Upload artifact (GitHub)
         if: ${{ !startsWith(github.ref, 'refs/tags/') && env.GITEA_ACTIONS == '' }}
         uses: actions/upload-artifact@v4
         with:
-          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.unitypackage"
+          path: "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.zip"
           name: ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}
