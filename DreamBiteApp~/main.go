@@ -44,6 +44,8 @@ type HostInfo struct {
 
 const appName = "DreamBite"
 
+var version = "dev"
+
 func main() {
 	log := slog.New(
 		//nolint:exhaustruct
@@ -69,6 +71,8 @@ func run(log *slog.Logger) error {
 	defer func() {
 		_ = lockFile.Close()
 	}()
+
+	log.Info("Starting", slog.String("version", version))
 
 	// TODO: get vrchat address from OSCQuery.
 	vrchatAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:9000")
