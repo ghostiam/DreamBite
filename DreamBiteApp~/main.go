@@ -46,6 +46,11 @@ const appName = "DreamBite"
 
 var version = "dev"
 
+// TODO:
+//  add GUI with tray icon
+//  auto build OSCQueryNode tree
+//  /avatar/parameters/VRMode + TrackingType https://creators.vrchat.com/avatars/animator-parameters/
+
 func main() {
 	log := slog.New(
 		//nolint:exhaustruct
