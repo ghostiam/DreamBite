@@ -12,6 +12,8 @@
 закинул префаб, подогнал позицию рта и готово! \
 Работает с фейстрекингом и без.
 
+https://github.com/user-attachments/assets/66449eeb-d040-489c-89da-a026e0b159fa
+
 ## Скачать
 Последнюю версию можно найти в разделе [релизов на GitHub](https://github.com/ghostiam/DreamBite/releases)
 

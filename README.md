@@ -12,6 +12,8 @@ This is an open-source tool for interacting with PhysBones that takes just a cou
 drop the prefab, adjust the mouth position, and you're good to go! \
 Works with face tracking and manual mode.
 
+https://github.com/user-attachments/assets/66449eeb-d040-489c-89da-a026e0b159fa
+
 ## Download
 Grab the latest version from the [GitHub Releases](https://github.com/ghostiam/DreamBite/releases) section.
 
