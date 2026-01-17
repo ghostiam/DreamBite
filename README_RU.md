@@ -19,7 +19,7 @@ https://github.com/user-attachments/assets/66449eeb-d040-489c-89da-a026e0b159fa
 
 ## Что понадобится
 - [VRChat SDK3](https://vrchat.com/home/download)
-- [VRFury](https://vrcfury.com)
+- [VRCFury](https://vrcfury.com)
 
 ## Как настроить
 1. Импортируй `unitypackage` в свой проект.

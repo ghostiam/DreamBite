@@ -19,7 +19,7 @@ Grab the latest version from the [GitHub Releases](https://github.com/ghostiam/D
 
 ## Requirements
 - [VRChat SDK3](https://vrchat.com/home/download)
-- [VRFury](https://vrcfury.com)
+- [VRCFury](https://vrcfury.com)
 
 ## Setup
 1. Import the `unitypackage` into your project.
