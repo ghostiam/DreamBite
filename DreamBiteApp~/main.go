@@ -113,6 +113,12 @@ func run(log *slog.Logger) error {
 		FullPath: "/avatar",
 		Contents: make(map[string]*OSCQueryNode),
 	}
+	root.Contents["avatar"].Contents["change"] = &OSCQueryNode{
+		FullPath: "/avatar/change",
+		Type:     string(osc.TypetagString),
+		Access:   3, // Read/Write.
+		Value:    []any{""},
+	}
 	root.Contents["avatar"].Contents["parameters"] = &OSCQueryNode{
 		FullPath: "/avatar/parameters",
 		Contents: make(map[string]*OSCQueryNode),
@@ -123,7 +129,7 @@ func run(log *slog.Logger) error {
 	}
 	root.Contents["avatar"].Contents["parameters"].Contents["DreamBite"].Contents["Grab"] = &OSCQueryNode{
 		FullPath: "/avatar/parameters/DreamBite/Grab",
-		Type:     "T",
+		Type:     string(osc.TypetagTrue),
 		Access:   3, // Read/Write.
 		Value:    []any{false},
 	}
@@ -196,8 +202,70 @@ func run(log *slog.Logger) error {
 		}
 	}()
 
+	sendGrab := func(v bool, hand Hand) error {
+		// Send GrabRight in response
+		resp := osc.Message{
+			Address:   "/input/Grab" + string(hand),
+			Arguments: []osc.Argument{osc.Bool(v)},
+			Sender:    nil,
+		}
+		err = oscClient.Send(resp)
+		if err != nil {
+			return fmt.Errorf("send OSC message: %w", err)
+		}
+
+		return nil
+	}
+
 	// OSC Handlers.
+	hand := HandRight
 	dispatcher := osc.PatternMatching{
+		"/avatar/change": osc.Method(func(msg osc.Message) error {
+			if len(msg.Arguments) == 0 {
+				return fmt.Errorf("expected at least one argument for /avatar/change")
+			}
+
+			// Reset hands grab.
+			_ = sendGrab(false, HandRight)
+			_ = sendGrab(false, HandLeft)
+
+			avatarID, err := msg.Arguments[0].ReadString()
+			if err != nil {
+				return fmt.Errorf("read first argument as string: %w", err)
+			}
+
+			// Update value in OSCQuery tree
+			if node := findNode(root, "/avatar/change"); node != nil {
+				node.Value = []any{avatarID}
+			}
+
+			// ~\AppData\LocalLow\VRChat\VRChat\OSC\{userId}\Avatars\{avatarId}.json
+			filePath := filepath.Join(os.Getenv("USERPROFILE"), "AppData", "LocalLow", "VRChat", "VRChat", "OSC", avatarID+".json")
+			file, err := os.Open(filePath)
+			if err != nil {
+				return fmt.Errorf("open avatar config file: %w", err)
+			}
+			defer func() {
+				_ = file.Close()
+			}()
+
+			var cfg AvatarConfig
+			err = json.NewDecoder(file).Decode(&cfg)
+			if err != nil {
+				return fmt.Errorf("decode avatar config file: %w", err)
+			}
+
+			for _, parameter := range cfg.Parameters {
+				if parameter.Name == "DreamBite/Marker/RightHand" {
+					hand = HandRight
+				}
+				if parameter.Name == "DreamBite/Marker/LeftHand" {
+					hand = HandLeft
+				}
+			}
+
+			return nil
+		}),
 		"/avatar/parameters/DreamBite/Grab": osc.Method(func(msg osc.Message) error {
 			if len(msg.Arguments) > 0 {
 				log.Info("Received DreamBite/Grab", slog.Any("arguments", msg.Arguments))
@@ -212,16 +280,12 @@ func run(log *slog.Logger) error {
 					node.Value = []any{val}
 				}
 
-				// Send GrabRight in response
-				resp := osc.Message{
-					Address:   "/input/GrabRight",
-					Arguments: []osc.Argument{osc.Bool(val)},
-					Sender:    nil,
-				}
-				err = oscClient.Send(resp)
+				err = sendGrab(val, hand)
 				if err != nil {
-					return fmt.Errorf("send OSC message: %w", err)
+					return fmt.Errorf("send grab: %w", err)
 				}
+
+				return nil
 			}
 			return nil
 		}),
@@ -296,3 +360,35 @@ type slogPrint struct {
 func (s *slogPrint) Print(v ...any) {
 	s.log.Info(fmt.Sprint(v...)) //nolint:sloglint
 }
+
+type Hand string
+
+const (
+	HandLeft  Hand = "Left"
+	HandRight Hand = "Right"
+)
+
+type AvatarConfig struct {
+	ID         string                    `json:"id"`
+	Name       string                    `json:"name"`
+	Parameters []*AvatarConfigParameters `json:"parameters"`
+}
+
+type AvatarConfigParameters struct {
+	Name   string                 `json:"name"`
+	Input  *AvatarConfigParameter `json:"input,omitempty"`
+	Output *AvatarConfigParameter `json:"output"`
+}
+
+type AvatarConfigParameter struct {
+	Address string                    `json:"address"`
+	Type    AvatarConfigParameterType `json:"type"`
+}
+
+type AvatarConfigParameterType string
+
+const (
+	IntType   AvatarConfigParameterType = "Int"
+	BoolType  AvatarConfigParameterType = "Bool"
+	FloatType AvatarConfigParameterType = "Float"
+)

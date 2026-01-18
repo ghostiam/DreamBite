@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028301, g: 0.22571309, b: 0.30692127, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1056,6 +1056,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 644658244}
     m_Modifications:
+    - target: {fileID: 324420008572731539, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: hand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333509560213400074, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: managedReferences[7015534265604505847].linkTo.Array.data[0].bone
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1892184704707992190, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: length
@@ -1085,6 +1095,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878694893955132657, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: localOnly
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878694893955132657, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: parameter
+      value: DreamBite/Marker/RightHand
       objectReference: {fileID: 0}
     - target: {fileID: 3186989643818040938, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
@@ -1109,7 +1129,7 @@ PrefabInstance:
     - target: {fileID: 3307288812110230971, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: arrowCapSize
-      value: 0.028623143
+      value: 0.02862314
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
@@ -1129,22 +1149,22 @@ PrefabInstance:
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00000005339429
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000005337586
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7069847
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.70722884
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5527157207338565868, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
@@ -7604,6 +7624,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 13004760}
     m_Modifications:
+    - target: {fileID: 324420008572731539, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: hand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333509560213400074, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: managedReferences[7015534265604505847].linkTo.Array.data[0].bone
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1892184704707992190, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: length
@@ -7633,6 +7663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878694893955132657, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
+        type: 3}
+      propertyPath: parameter
+      value: DreamBite/Marker/RightHand
       objectReference: {fileID: 0}
     - target: {fileID: 3186989643818040938, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
@@ -7677,22 +7712,22 @@ PrefabInstance:
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00000005339429
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000005337586
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7069847
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5290639254925258527, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.70722884
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5527157207338565868, guid: 7cee0dd5a210e8746b7a2e8b929152b8,
         type: 3}

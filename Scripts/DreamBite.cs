@@ -2,12 +2,15 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 using VRC.Dynamics;
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.Constraint.Components;
+using VRC.SDK3.Dynamics.Contact.Components;
 using VRC.SDKBase;
 using VRC.SDKBase.Editor.BuildPipeline;
 
@@ -24,17 +27,19 @@ namespace GhostIAm.DreamBite
     [AddComponentMenu("GhostIAm/DreamBite")]
     public class DreamBite : MonoBehaviour, IEditorOnly
     {
-        public Hand hand = Hand.Right;
-        public FixHandRotationMode fixHandRotationMode = FixHandRotationMode.Auto;
-        public Quaternion fixHandRotation = Quaternion.identity;
+        [NotKeyable] public Hand hand = Hand.Right;
+        [NotKeyable] public FixHandRotationMode fixHandRotationMode = FixHandRotationMode.Auto;
+        [NotKeyable] public Quaternion fixHandRotation = Quaternion.identity;
 
-        public Color gizmoColor = new(1, 0.5f, 0);
-        public Transform handProxy;
-        public Transform mouthTarget;
+        [NotKeyable] public Color gizmoColor = new(1, 0.5f, 0);
+        [NotKeyable] public Transform handProxy;
+        [NotKeyable] public Transform mouthTarget;
 
         private Vector3 _cachedPosition;
         private Quaternion _cachedRotation;
         private VRCAvatarDescriptor.ColliderConfig _cachedHandCollider;
+
+        private string _markerName = "DreamBite/Marker";
 
         public enum Hand
         {
@@ -152,6 +157,7 @@ namespace GhostIAm.DreamBite
             SetupGizmos(handProxy, handColliderRadius, handColliderHeight);
 
             UpdateHandInVrcFuryArmatureLink();
+            ConfigureHandProxyMarker();
         }
 
         private Quaternion CalculateAutoRotation()
@@ -201,6 +207,8 @@ namespace GhostIAm.DreamBite
             {
                 constraint.Sources[0] = source;
             }
+            
+            EditorUtility.SetDirty(constraint);
         }
 
         private void SetupGizmos(Transform target, float radius, float height)
@@ -212,7 +220,7 @@ namespace GhostIAm.DreamBite
             }
 
             var arrowEndpoint = Vector3.forward * (radius * 4f);
-            
+
             gizmos.color = gizmoColor;
             gizmos.preservingSize = false;
             gizmos.drawCapsule = true;
@@ -228,6 +236,8 @@ namespace GhostIAm.DreamBite
                 gizmos.arrowCapSize = radius;
             gizmos.position = Vector3.zero;
             gizmos.rotation = Quaternion.identity;
+
+            EditorUtility.SetDirty(gizmos);
         }
 
         private void UpdateHandInVrcFuryArmatureLink()
@@ -285,6 +295,30 @@ namespace GhostIAm.DreamBite
             EditorUtility.SetDirty(component);
         }
 
+        private void ConfigureHandProxyMarker()
+        {
+            var contact = handProxy.GetComponent<VRCContactReceiver>();
+            if (!contact)
+            {
+                throw new Exception("VRCContactReceiver component not found on hand proxy.");
+            }
+
+            var isRightHand = hand == Hand.Right;
+            var handBone = isRightHand ? HumanBodyBones.RightHand : HumanBodyBones.LeftHand;
+
+            contact.shapeType = ContactBase.ShapeType.Sphere;
+            contact.radius = 0;
+            contact.position = Vector3.zero;
+            contact.rotation = Quaternion.identity;
+            contact.contentTypes = DynamicsUsageFlags.Nothing;
+            contact.localOnly = true;
+            contact.collisionTags = new List<string> { _markerName };
+            contact.receiverType = ContactReceiver.ReceiverType.Constant;
+            contact.parameter = $"{_markerName}/{handBone}";
+        
+            EditorUtility.SetDirty(contact);
+        }
+
         private void SetupMouthTarget(float handColliderRadius, float handColliderHeight)
         {
             // Check mouth target exists.
@@ -297,7 +331,7 @@ namespace GhostIAm.DreamBite
             // Set transform.
 
             var targetRotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.forward);
-            
+
             if (!Approximately(mouthTarget.transform.position, transform.position))
                 mouthTarget.transform.position = transform.position;
             if (!Approximately(mouthTarget.transform.rotation, targetRotation))
@@ -364,7 +398,7 @@ namespace GhostIAm.DreamBite
         {
             Debug.unityLogger.Log(logType, $"[{nameof(DreamBite)}] {s}");
         }
-        
+
         // These functions are used to prevent constant value changes in git and prefabs caused by Unity precision errors.
         // Without them, values would slightly change on every update even when they should remain the same,
         // leading to unnecessary modifications being tracked in version control.
