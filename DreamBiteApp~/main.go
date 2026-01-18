@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net"
@@ -9,7 +10,6 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
-	"strings"
 	"syscall"
 	"time"
 
@@ -18,29 +18,9 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/grandcat/zeroconf"
 	"github.com/scgolang/osc"
+
+	"DreamBiteApp/oscquery"
 )
-
-//nolint:tagliatelle
-type OSCQueryNode struct {
-	FullPath    string                   `json:"FULL_PATH"`
-	Contents    map[string]*OSCQueryNode `json:"CONTENTS,omitempty" exhaustruct:"optional"`
-	Access      int                      `json:"ACCESS,omitempty" exhaustruct:"optional"`
-	Type        string                   `json:"TYPE,omitempty" exhaustruct:"optional"`
-	Value       []any                    `json:"VALUE,omitempty" exhaustruct:"optional"`
-	Description string                   `json:"DESCRIPTION,omitempty" exhaustruct:"optional"`
-	//
-	// TODO:
-	//  handler func(message osc.Message, node *OSCQueryNode) error
-}
-
-//nolint:tagliatelle
-type HostInfo struct {
-	Name         string          `json:"NAME"`
-	OscPort      int             `json:"OSC_PORT"`
-	OscIP        string          `json:"OSC_IP"`
-	OscTransport string          `json:"OSC_TRANSPORT"`
-	Extensions   map[string]bool `json:"EXTENSIONS"`
-}
 
 const appName = "DreamBite"
 
@@ -48,7 +28,6 @@ var version = "dev"
 
 // TODO:
 //  add GUI with tray icon
-//  auto build OSCQueryNode tree
 //  /avatar/parameters/VRMode + TrackingType https://creators.vrchat.com/avatars/animator-parameters/
 
 func main() {
@@ -93,7 +72,11 @@ func run(log *slog.Logger) error {
 	}()
 
 	// Setup OSC.
-	oscServer, err := osc.ListenUDP("udp", nil)
+	oscServerAddr, err := net.ResolveUDPAddr("udp", "0.0.0.0:0")
+	if err != nil {
+		return fmt.Errorf("resolve OSC server address: %w", err)
+	}
+	oscServer, err := osc.ListenUDP("udp", oscServerAddr)
 	if err != nil {
 		return fmt.Errorf("listen OSC server: %w", err)
 	}
@@ -104,79 +87,21 @@ func run(log *slog.Logger) error {
 	oscAddr, _ := oscServer.LocalAddr().(*net.UDPAddr)
 	log.Info("OSC Server listening", slog.Int("port", oscAddr.Port))
 
-	// OSCQuery.
-	root := &OSCQueryNode{
-		FullPath: "/",
-		Contents: make(map[string]*OSCQueryNode),
+	// OSC Query.
+
+	oscQuery, err := oscquery.New[oscQueryMethod]()
+	if err != nil {
+		return fmt.Errorf("create OSCQuery: %w", err)
 	}
-	root.Contents["avatar"] = &OSCQueryNode{
-		FullPath: "/avatar",
-		Contents: make(map[string]*OSCQueryNode),
-	}
-	root.Contents["avatar"].Contents["change"] = &OSCQueryNode{
-		FullPath: "/avatar/change",
-		Type:     string(osc.TypetagString),
-		Access:   3, // Read/Write.
-		Value:    []any{""},
-	}
-	root.Contents["avatar"].Contents["parameters"] = &OSCQueryNode{
-		FullPath: "/avatar/parameters",
-		Contents: make(map[string]*OSCQueryNode),
-	}
-	root.Contents["avatar"].Contents["parameters"].Contents["DreamBite"] = &OSCQueryNode{
-		FullPath: "/avatar/parameters/DreamBite",
-		Contents: make(map[string]*OSCQueryNode),
-	}
-	root.Contents["avatar"].Contents["parameters"].Contents["DreamBite"].Contents["Grab"] = &OSCQueryNode{
-		FullPath: "/avatar/parameters/DreamBite/Grab",
-		Type:     string(osc.TypetagTrue),
-		Access:   3, // Read/Write.
-		Value:    []any{false},
-	}
+	oscQuery.SetHostInfo(&oscquery.HostInfo{
+		Name:    appName,
+		OscPort: oscAddr.Port,
+	})
 
 	// HTTP Server.
 	r := chi.NewRouter()
 	r.Use(middleware.RequestLogger(&middleware.DefaultLogFormatter{Logger: &slogPrint{log}, NoColor: true}))
-
-	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-		if strings.Contains(r.RequestURI, "HOST_INFO") {
-			localAddr, _ := r.Context().Value(http.LocalAddrContextKey).(net.Addr)
-			hostIP := "127.0.0.1"
-			if tcpAddr, ok := localAddr.(*net.TCPAddr); ok {
-				hostIP = tcpAddr.IP.String()
-			}
-
-			hostInfo := HostInfo{
-				Name:         appName,
-				OscPort:      oscAddr.Port,
-				OscIP:        hostIP,
-				OscTransport: "UDP",
-				Extensions: map[string]bool{
-					"ACCESS": true,
-					"VALUE":  true,
-				},
-			}
-			w.Header().Set("Content-Type", "application/json")
-			err := json.NewEncoder(w).Encode(hostInfo)
-			if err != nil {
-				slog.Error("Encode host info", slog.String("error", err.Error()))
-			}
-			return
-		}
-
-		path := r.URL.Path
-		node := findNode(root, path)
-		if node == nil {
-			http.NotFound(w, r)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json")
-		err := json.NewEncoder(w).Encode(node)
-		if err != nil {
-			slog.Error("Encode OSCQuery node", slog.String("error", err.Error()))
-			return
-		}
-	})
+	r.Handle("/*", oscQuery)
 
 	httpListener, err := net.Listen("tcp", ":0") //nolint:gosec // allow binding to any interface.
 	if err != nil {
@@ -203,6 +128,8 @@ func run(log *slog.Logger) error {
 	}()
 
 	sendGrab := func(v bool, hand Hand) error {
+		log.Debug("Send Grab", slog.Any("hand", string(hand)), slog.Bool("value", v))
+
 		// Send GrabRight in response
 		resp := osc.Message{
 			Address:   "/input/Grab" + string(hand),
@@ -217,12 +144,16 @@ func run(log *slog.Logger) error {
 		return nil
 	}
 
-	// OSC Handlers.
 	hand := HandRight
-	dispatcher := osc.PatternMatching{
-		"/avatar/change": osc.Method(func(msg osc.Message) error {
+	err = oscQuery.AddEndpoint(&oscquery.Endpoint[oscQueryMethod]{
+		FullPath: "/avatar/change",
+		Access:   oscquery.AccessReadWrite,
+		Type:     oscquery.TypeString,
+		Handler: func(msg osc.Message, node oscquery.Node[oscQueryMethod]) error {
+			log.Debug("Received /avatar/change", slog.Any("arguments", msg.Arguments))
+
 			if len(msg.Arguments) == 0 {
-				return fmt.Errorf("expected at least one argument for /avatar/change")
+				return errors.New("expected at least one argument for /avatar/change")
 			}
 
 			// Reset hands grab.
@@ -234,10 +165,8 @@ func run(log *slog.Logger) error {
 				return fmt.Errorf("read first argument as string: %w", err)
 			}
 
-			// Update value in OSCQuery tree
-			if node := findNode(root, "/avatar/change"); node != nil {
-				node.Value = []any{avatarID}
-			}
+			// Update value
+			node.SetValue([]any{avatarID})
 
 			// ~\AppData\LocalLow\VRChat\VRChat\OSC\{userId}\Avatars\{avatarId}.json
 			filePath := filepath.Join(os.Getenv("USERPROFILE"), "AppData", "LocalLow", "VRChat", "VRChat", "OSC", avatarID+".json")
@@ -265,20 +194,27 @@ func run(log *slog.Logger) error {
 			}
 
 			return nil
-		}),
-		"/avatar/parameters/DreamBite/Grab": osc.Method(func(msg osc.Message) error {
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("add avatar change endpoint: %w", err)
+	}
+
+	err = oscQuery.AddEndpoint(&oscquery.Endpoint[oscQueryMethod]{
+		FullPath: "/avatar/parameters/DreamBite/Grab",
+		Access:   oscquery.AccessReadWrite,
+		Type:     oscquery.TypeString,
+		Handler: func(msg osc.Message, node oscquery.Node[oscQueryMethod]) error {
 			if len(msg.Arguments) > 0 {
-				log.Info("Received DreamBite/Grab", slog.Any("arguments", msg.Arguments))
+				log.Info("Received /avatar/parameters/DreamBite/Grab", slog.Any("arguments", msg.Arguments))
 
 				val, err := msg.Arguments[0].ReadBool()
 				if err != nil {
 					return fmt.Errorf("read first argument as bool: %w", err)
 				}
 
-				// Update value in OSCQuery tree
-				if node := findNode(root, "/avatar/parameters/DreamBite/Grab"); node != nil {
-					node.Value = []any{val}
-				}
+				// Update value
+				node.SetValue([]any{val})
 
 				err = sendGrab(val, hand)
 				if err != nil {
@@ -288,10 +224,15 @@ func run(log *slog.Logger) error {
 				return nil
 			}
 			return nil
-		}),
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("add avatar change endpoint: %w", err)
 	}
+
+	// OSC Handlers.
 	go func() {
-		e := oscServer.Serve(1, dispatcher)
+		e := oscServer.Serve(1, &oscQueryDispatcher{oscQuery, log})
 		if e != nil {
 			errCh <- fmt.Errorf("osc server: %w", e)
 		}
@@ -337,20 +278,53 @@ func run(log *slog.Logger) error {
 	}
 }
 
-func findNode(root *OSCQueryNode, path string) *OSCQueryNode {
-	if path == "/" || path == "" {
-		return root
-	}
-	parts := strings.Split(strings.Trim(path, "/"), "/")
-	current := root
-	for _, part := range parts {
-		next, ok := current.Contents[part]
-		if !ok {
-			return nil
+type oscQueryMethod func(msg osc.Message, node oscquery.Node[oscQueryMethod]) error
+
+type oscQueryDispatcher struct {
+	oscQuery *oscquery.OscQuery[oscQueryMethod]
+	log      *slog.Logger
+}
+
+func (d *oscQueryDispatcher) Dispatch(b osc.Bundle, exactMatch bool) error {
+	for _, p := range b.Packets {
+		err := d.invoke(p, exactMatch)
+		if err != nil {
+			d.log.Error("Dispatch", slog.String("err", err.Error()))
 		}
-		current = next
 	}
-	return current
+
+	return nil
+}
+
+func (d *oscQueryDispatcher) Invoke(msg osc.Message, _ bool) error {
+	ep, ok := d.oscQuery.GetEndpoint(msg.Address)
+	if !ok {
+		d.log.Debug("No endpoint found", slog.String("address", msg.Address))
+		return nil
+	}
+
+	h := ep.Handler()
+	if h == nil {
+		return fmt.Errorf("endpoint handler not set: %s", msg.Address)
+	}
+
+	err := h(msg, ep)
+	if err != nil {
+		d.log.Error("Invoke", slog.String("err", err.Error()))
+	}
+
+	return nil
+}
+
+func (d *oscQueryDispatcher) invoke(p osc.Packet, exactMatch bool) error {
+	switch x := p.(type) {
+	case osc.Message:
+		return d.Invoke(x, exactMatch)
+	case osc.Bundle:
+		return d.Dispatch(x, exactMatch)
+	default:
+		return fmt.Errorf("unsupported type for dispatcher: %T", p)
+	}
 }
 
 type slogPrint struct {
