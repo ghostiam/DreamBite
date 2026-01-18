@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net"
 	"net/http"
@@ -168,28 +169,16 @@ func run(log *slog.Logger) error {
 			// Update value
 			node.SetValue([]any{avatarID})
 
-			// ~\AppData\LocalLow\VRChat\VRChat\OSC\{userId}\Avatars\{avatarId}.json
-			filePath := filepath.Join(os.Getenv("USERPROFILE"), "AppData", "LocalLow", "VRChat", "VRChat", "OSC", avatarID+".json")
-			file, err := os.Open(filePath)
-			if err != nil {
-				return fmt.Errorf("open avatar config file: %w", err)
-			}
-			defer func() {
-				_ = file.Close()
-			}()
+			avatarConfig, err := getAvatarConfigFile(avatarID)
 
-			var cfg AvatarConfig
-			err = json.NewDecoder(file).Decode(&cfg)
-			if err != nil {
-				return fmt.Errorf("decode avatar config file: %w", err)
-			}
-
-			for _, parameter := range cfg.Parameters {
+			for _, parameter := range avatarConfig.Parameters {
 				if parameter.Name == "DreamBite/Marker/RightHand" {
 					hand = HandRight
+					log.Info("Avatar uses right hand")
 				}
 				if parameter.Name == "DreamBite/Marker/LeftHand" {
 					hand = HandLeft
+					log.Info("Avatar uses left hand")
 				}
 			}
 
@@ -278,6 +267,80 @@ func run(log *slog.Logger) error {
 	}
 }
 
+func getAvatarConfigFile(avatarID string) (*AvatarConfig, error) {
+	// ~\AppData\LocalLow\VRChat\VRChat\OSC\usr_*\Avatars\*.json
+	filePathGlob := filepath.Join(
+		os.Getenv("USERPROFILE"), "AppData", "LocalLow", "VRChat", "VRChat", "OSC",
+		"usr_*", "Avatars", avatarID+".json",
+	)
+
+	matches, err := filepath.Glob(filePathGlob)
+	if err != nil {
+		return nil, fmt.Errorf("glob avatar config files: %w", err)
+	}
+
+	if len(matches) == 0 {
+		return nil, fmt.Errorf("no avatar config files found for avatar ID %s", avatarID)
+	}
+
+	// Sort files by creation time (newest first)
+	type fileWithTime struct {
+		path string
+		time time.Time
+	}
+	filesWithTime := make([]fileWithTime, 0, len(matches))
+	for _, match := range matches {
+		info, err := os.Stat(match)
+		if err != nil {
+			continue
+		}
+		filesWithTime = append(filesWithTime, fileWithTime{
+			path: match,
+			time: info.ModTime(),
+		})
+	}
+
+	if len(filesWithTime) == 0 {
+		return nil, fmt.Errorf("no accessible avatar config files found for avatar ID %s", avatarID)
+	}
+
+	// Sort by modification time descending (newest first)
+	for i := 0; i < len(filesWithTime)-1; i++ {
+		for j := i + 1; j < len(filesWithTime); j++ {
+			if filesWithTime[j].time.After(filesWithTime[i].time) {
+				filesWithTime[i], filesWithTime[j] = filesWithTime[j], filesWithTime[i]
+			}
+		}
+	}
+
+	avatarConfigFile := filesWithTime[0].path
+
+	file, err := os.Open(avatarConfigFile)
+	if err != nil {
+		return nil, fmt.Errorf("open avatar config file: %w", err)
+	}
+	defer func() {
+		_ = file.Close()
+	}()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		return nil, fmt.Errorf("read avatar config file: %w", err)
+	}
+
+	// Fix config.
+	// TODO: rewrite this.
+	data = data[3:]
+
+	var cfg AvatarConfig
+	err = json.Unmarshal(data, &cfg)
+	if err != nil {
+		return nil, fmt.Errorf("decode avatar config file: %w", err)
+	}
+
+	return &cfg, nil
+}
+
 type oscQueryMethod func(msg osc.Message, node oscquery.Node[oscQueryMethod]) error
 
 type oscQueryDispatcher struct {
@@ -299,7 +362,6 @@ func (d *oscQueryDispatcher) Dispatch(b osc.Bundle, exactMatch bool) error {
 func (d *oscQueryDispatcher) Invoke(msg osc.Message, _ bool) error {
 	ep, ok := d.oscQuery.GetEndpoint(msg.Address)
 	if !ok {
-		d.log.Debug("No endpoint found", slog.String("address", msg.Address))
 		return nil
 	}
 
