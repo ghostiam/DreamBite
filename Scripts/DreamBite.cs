@@ -49,13 +49,13 @@ namespace GhostIAm.DreamBite
             var isRightHand = hand == Hand.Right;
             var handCollider = isRightHand ? avatar.collider_handR : avatar.collider_handL;
 
-            var skipUpdate = _cachedPosition == transform.position &&
-                             _cachedRotation == transform.rotation &&
+            var skipUpdate = Approximately(_cachedPosition, transform.position) &&
+                             Approximately(_cachedRotation, transform.rotation) &&
                              _cachedHandCollider.transform == handCollider.transform &&
-                             _cachedHandCollider.position == handCollider.position &&
-                             _cachedHandCollider.rotation == handCollider.rotation &&
-                             Mathf.Approximately(_cachedHandCollider.height, handCollider.height) &&
-                             Mathf.Approximately(_cachedHandCollider.radius, handCollider.radius)
+                             Approximately(_cachedHandCollider.position, handCollider.position) &&
+                             Approximately(_cachedHandCollider.rotation, handCollider.rotation) &&
+                             Approximately(_cachedHandCollider.height, handCollider.height) &&
+                             Approximately(_cachedHandCollider.radius, handCollider.radius)
                 ;
 
             if (skipUpdate)
@@ -132,8 +132,10 @@ namespace GhostIAm.DreamBite
                 _ => Quaternion.identity
             };
 
-            handProxy.transform.position = handColliderPos;
-            handProxy.transform.rotation = rotation;
+            if (!Approximately(handProxy.transform.position, handColliderPos))
+                handProxy.transform.position = handColliderPos;
+            if (!Approximately(handProxy.transform.rotation, rotation))
+                handProxy.transform.rotation = rotation;
             handProxy.transform.localScale = Vector3.one;
 
             // VRCParentConstraint
@@ -166,8 +168,10 @@ namespace GhostIAm.DreamBite
             constraint.GlobalWeight = 0f;
 
             constraint.Locked = true;
-            constraint.PositionAtRest = handProxy.transform.localPosition;
-            constraint.RotationAtRest = handProxy.transform.localRotation.eulerAngles;
+            if (!Approximately(constraint.PositionAtRest, handProxy.transform.localPosition))
+                constraint.PositionAtRest = handProxy.transform.localPosition;
+            if (!Approximately(constraint.RotationAtRest, handProxy.transform.localRotation.eulerAngles))
+                constraint.RotationAtRest = handProxy.transform.localRotation.eulerAngles;
             constraint.AffectsPositionX = constraint.AffectsPositionY = constraint.AffectsPositionZ = true;
             constraint.AffectsRotationX = constraint.AffectsRotationY = constraint.AffectsRotationZ = true;
 
@@ -199,15 +203,21 @@ namespace GhostIAm.DreamBite
                 throw new Exception("DreamBiteGizmos component not found on hand proxy.");
             }
 
+            var arrowEndpoint = Vector3.forward * (radius * 4f);
+            
             gizmos.color = gizmoColor;
             gizmos.preservingSize = false;
             gizmos.drawCapsule = true;
-            gizmos.radius = radius;
-            gizmos.length = height;
+            if (!Approximately(gizmos.radius, radius))
+                gizmos.radius = radius;
+            if (!Approximately(gizmos.length, height))
+                gizmos.length = height;
             gizmos.drawArrow = true;
             gizmos.arrowStart = Vector3.zero;
-            gizmos.arrowEnd = Vector3.forward * (radius * 4f);
-            gizmos.arrowCapSize = radius;
+            if (!Approximately(gizmos.arrowEnd, arrowEndpoint))
+                gizmos.arrowEnd = arrowEndpoint;
+            if (!Approximately(gizmos.arrowCapSize, radius))
+                gizmos.arrowCapSize = radius;
             gizmos.position = Vector3.zero;
             gizmos.rotation = Quaternion.identity;
         }
@@ -278,8 +288,12 @@ namespace GhostIAm.DreamBite
 
             // Set transform.
 
-            mouthTarget.transform.position = transform.position;
-            mouthTarget.transform.rotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.forward);
+            var targetRotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.forward);
+            
+            if (!Approximately(mouthTarget.transform.position, transform.position))
+                mouthTarget.transform.position = transform.position;
+            if (!Approximately(mouthTarget.transform.rotation, targetRotation))
+                mouthTarget.transform.rotation = targetRotation;
             mouthTarget.transform.localScale = Vector3.one;
 
             // Head chop
@@ -341,6 +355,25 @@ namespace GhostIAm.DreamBite
         private static void Log(LogType logType, string s)
         {
             Debug.unityLogger.Log(logType, $"[{nameof(DreamBite)}] {s}");
+        }
+        
+        // These functions are used to prevent constant value changes in git and prefabs caused by Unity precision errors.
+        // Without them, values would slightly change on every update even when they should remain the same,
+        // leading to unnecessary modifications being tracked in version control.
+
+        private static bool Approximately(float a, float b)
+        {
+            return Mathf.Abs(b - a) < 0.00001;
+        }
+
+        private static bool Approximately(Vector3 a, Vector3 b)
+        {
+            return Vector3.Distance(a, b) < 0.00001;
+        }
+
+        private static bool Approximately(Quaternion a, Quaternion b)
+        {
+            return Quaternion.Dot(a, b) > 0.99998;
         }
 
         public class OnAvatarBuildUpdateSettings : IVRCSDKPreprocessAvatarCallback
