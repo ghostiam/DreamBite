@@ -4,6 +4,7 @@ go 1.25
 
 require (
 	github.com/allan-simon/go-singleinstance v0.0.0-20210120080615-d0997106ab37
+	github.com/davecgh/go-spew v1.1.1
 	github.com/go-chi/chi/v5 v5.2.4
 	github.com/grandcat/zeroconf v1.0.0
 	github.com/scgolang/osc v0.11.1

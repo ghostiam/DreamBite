@@ -1,0 +1,1507 @@
+{
+  "DESCRIPTION": "root node",
+  "FULL_PATH": "/",
+  "ACCESS": 0,
+  "CONTENTS": {
+    "dolly": {
+      "FULL_PATH": "/dolly",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "Import": {
+          "FULL_PATH": "/dolly/Import",
+          "ACCESS": 2,
+          "TYPE": "s",
+          "VALUE": [
+            null
+          ]
+        },
+        "Export": {
+          "FULL_PATH": "/dolly/Export",
+          "ACCESS": 2,
+          "TYPE": "s",
+          "VALUE": [
+            null
+          ]
+        },
+        "ExportLocal": {
+          "FULL_PATH": "/dolly/ExportLocal",
+          "ACCESS": 2,
+          "TYPE": "s",
+          "VALUE": [
+            null
+          ]
+        },
+        "PlayDelayed": {
+          "FULL_PATH": "/dolly/PlayDelayed",
+          "ACCESS": 2,
+          "TYPE": "i",
+          "VALUE": [
+            0
+          ]
+        },
+        "Play": {
+          "FULL_PATH": "/dolly/Play",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        }
+      }
+    },
+    "tracking": {
+      "FULL_PATH": "/tracking",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "trackers": {
+          "FULL_PATH": "/tracking/trackers",
+          "ACCESS": 0,
+          "CONTENTS": {
+            "1": {
+              "FULL_PATH": "/tracking/trackers/1",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/1/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/1/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "2": {
+              "FULL_PATH": "/tracking/trackers/2",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/2/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/2/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "3": {
+              "FULL_PATH": "/tracking/trackers/3",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/3/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/3/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "4": {
+              "FULL_PATH": "/tracking/trackers/4",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/4/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/4/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "5": {
+              "FULL_PATH": "/tracking/trackers/5",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/5/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/5/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "6": {
+              "FULL_PATH": "/tracking/trackers/6",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/6/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/6/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "7": {
+              "FULL_PATH": "/tracking/trackers/7",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/7/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/7/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "8": {
+              "FULL_PATH": "/tracking/trackers/8",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/8/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/8/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            },
+            "head": {
+              "FULL_PATH": "/tracking/trackers/head",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "position": {
+                  "FULL_PATH": "/tracking/trackers/head/position",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                },
+                "rotation": {
+                  "FULL_PATH": "/tracking/trackers/head/rotation",
+                  "ACCESS": 2,
+                  "TYPE": "fff"
+                }
+              }
+            }
+          }
+        },
+        "eye": {
+          "FULL_PATH": "/tracking/eye",
+          "ACCESS": 0,
+          "CONTENTS": {
+            "CenterPitchYaw": {
+              "FULL_PATH": "/tracking/eye/CenterPitchYaw",
+              "ACCESS": 2,
+              "TYPE": "ff"
+            },
+            "CenterPitchYawDist": {
+              "FULL_PATH": "/tracking/eye/CenterPitchYawDist",
+              "ACCESS": 2,
+              "TYPE": "fff"
+            },
+            "LeftRightPitchYaw": {
+              "FULL_PATH": "/tracking/eye/LeftRightPitchYaw",
+              "ACCESS": 2,
+              "TYPE": "ffff"
+            },
+            "CenterVec": {
+              "FULL_PATH": "/tracking/eye/CenterVec",
+              "ACCESS": 2,
+              "TYPE": "fff"
+            },
+            "CenterVecFull": {
+              "FULL_PATH": "/tracking/eye/CenterVecFull",
+              "ACCESS": 2,
+              "TYPE": "fff"
+            },
+            "LeftRightVec": {
+              "FULL_PATH": "/tracking/eye/LeftRightVec",
+              "ACCESS": 2,
+              "TYPE": "ffffff"
+            },
+            "EyesClosedAmount": {
+              "FULL_PATH": "/tracking/eye/EyesClosedAmount",
+              "ACCESS": 2,
+              "TYPE": "f"
+            }
+          }
+        },
+        "vrsystem": {
+          "FULL_PATH": "/tracking/vrsystem",
+          "ACCESS": 0,
+          "CONTENTS": {
+            "head": {
+              "FULL_PATH": "/tracking/vrsystem/head",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "pose": {
+                  "FULL_PATH": "/tracking/vrsystem/head/pose",
+                  "ACCESS": 1,
+                  "TYPE": "ffffff",
+                  "VALUE": [
+                    null
+                  ]
+                }
+              }
+            },
+            "leftwrist": {
+              "FULL_PATH": "/tracking/vrsystem/leftwrist",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "pose": {
+                  "FULL_PATH": "/tracking/vrsystem/leftwrist/pose",
+                  "ACCESS": 1,
+                  "TYPE": "ffffff",
+                  "VALUE": [
+                    null
+                  ]
+                }
+              }
+            },
+            "rightwrist": {
+              "FULL_PATH": "/tracking/vrsystem/rightwrist",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "pose": {
+                  "FULL_PATH": "/tracking/vrsystem/rightwrist/pose",
+                  "ACCESS": 1,
+                  "TYPE": "ffffff",
+                  "VALUE": [
+                    null
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "input": {
+      "FULL_PATH": "/input",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "MoveForward": {
+          "DESCRIPTION": "Moves you forward while the input equals 1..",
+          "FULL_PATH": "/input/MoveForward",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "MoveBackward": {
+          "DESCRIPTION": "Moves you backward while the input equals 1..",
+          "FULL_PATH": "/input/MoveBackward",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "MoveLeft": {
+          "DESCRIPTION": "Moves you Left while the input equals 1..",
+          "FULL_PATH": "/input/MoveLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "MoveRight": {
+          "DESCRIPTION": "Moves you Right while the input equals 1..",
+          "FULL_PATH": "/input/MoveRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "LookLeft": {
+          "DESCRIPTION": "Looks to the left while the input equals 1..",
+          "FULL_PATH": "/input/LookLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "LookRight": {
+          "DESCRIPTION": "Looks to the right while the input equals 1..",
+          "FULL_PATH": "/input/LookRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Jump": {
+          "DESCRIPTION": "Jumps when the input changes to 1. Only has an effect when changing from 0 to 1.",
+          "FULL_PATH": "/input/Jump",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Run": {
+          "DESCRIPTION": "Applies run speed while the input equals 1.",
+          "FULL_PATH": "/input/Run",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ComfortLeft": {
+          "DESCRIPTION": "Spins you instantly to the left. Only has an effect in VR.",
+          "FULL_PATH": "/input/ComfortLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ComfortRight": {
+          "DESCRIPTION": "Spins you instantly to the right. Only has an effect in VR.",
+          "FULL_PATH": "/input/ComfortRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "DropRight": {
+          "DESCRIPTION": "Drops the item in your right hand.",
+          "FULL_PATH": "/input/DropRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "UseRight": {
+          "DESCRIPTION": "Uses the item in your right hand.",
+          "FULL_PATH": "/input/UseRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "GrabRight": {
+          "DESCRIPTION": "Grabs the item near your right hand.",
+          "FULL_PATH": "/input/GrabRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "DropLeft": {
+          "DESCRIPTION": "Drops the item in your left hand.",
+          "FULL_PATH": "/input/DropLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "UseLeft": {
+          "DESCRIPTION": "Uses the item in your left hand.",
+          "FULL_PATH": "/input/UseLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "GrabLeft": {
+          "DESCRIPTION": "Grabs the item near your left hand.",
+          "FULL_PATH": "/input/GrabLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "PanicButton": {
+          "DESCRIPTION": "Turns on Panic mode for your safety.",
+          "FULL_PATH": "/input/PanicButton",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "QuickMenuToggleLeft": {
+          "DESCRIPTION": "Toggles the state of the QuickMenu attached to your left hand. Only has an effect when changing from 0 to 1.",
+          "FULL_PATH": "/input/QuickMenuToggleLeft",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "QuickMenuToggleRight": {
+          "DESCRIPTION": "Toggles the state of the QuickMenu attached to your left hand. Only has an effect when changing from 0 to 1.",
+          "FULL_PATH": "/input/QuickMenuToggleRight",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ToggleSitStand": {
+          "DESCRIPTION": "Toggles between Sitting and Standing modes. Only has an effect in VR.",
+          "FULL_PATH": "/input/ToggleSitStand",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "AFKToggle": {
+          "DESCRIPTION": "Toggles AFK mode on and off. Only has an effect when changing from 0 to 1.",
+          "FULL_PATH": "/input/AFKToggle",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Voice": {
+          "DESCRIPTION": "In 'Toggle Mic' mode, Toggles your Mic when changing the input from 0 to 1. In Push-To-Talk Mode, 0 = Muted and 1 = Unmuted.",
+          "FULL_PATH": "/input/Voice",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo1": {
+          "DESCRIPTION": "Displays information about loaded asset bundles. It is mostly irrelevant to world development.",
+          "FULL_PATH": "/input/ShowDebugInfo1",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo2": {
+          "DESCRIPTION": "Displays the current build of VRChat that you are using, along with your FPS.",
+          "FULL_PATH": "/input/ShowDebugInfo2",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo3": {
+          "DESCRIPTION": "Displays your output log.",
+          "FULL_PATH": "/input/ShowDebugInfo3",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo4": {
+          "DESCRIPTION": "Displays various stats about other users. VR?: Whether or not the user is in VR. More info at https://docs.vrchat.com/docs/world-debug-views#debug-menu-4",
+          "FULL_PATH": "/input/ShowDebugInfo4",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo5": {
+          "DESCRIPTION": "Displays some graphs related to networking. They are unlabeled and mostly not useful.",
+          "FULL_PATH": "/input/ShowDebugInfo5",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo6": {
+          "DESCRIPTION": "Displays all the networked objects in your world, along with various stats. Only accessible to the world creator unless they have turned on 'World Debugging' via the website.",
+          "FULL_PATH": "/input/ShowDebugInfo6",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo7": {
+          "DESCRIPTION": "Overlays visual representations of every PhysBone and Contact in the world near the local player. Only accessible to the world creator unless they have turned on 'World Debugging' via the website.",
+          "FULL_PATH": "/input/ShowDebugInfo7",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo8": {
+          "DESCRIPTION": "Overlays a panel on top of every synced object in the world. Each panel displays various stats about that specific object. Only accessible to the world creator unless they have turned on 'World Debugging' via the website. More info at https://docs.vrchat.com/docs/world-debug-views#debug-menu-8",
+          "FULL_PATH": "/input/ShowDebugInfo8",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo9": {
+          "DESCRIPTION": "Displays debug stats for every player in the instance at their feet. Only accessible to the world creator unless they have turned on 'World Debugging' via the website.",
+          "FULL_PATH": "/input/ShowDebugInfo9",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowDebugInfo0": {
+          "DESCRIPTION": "Displays some debugging visualizations for VRC_UiShapes (interactable UIs). Only accessible to the world creator unless they have turned on 'World Debugging' via the website.",
+          "FULL_PATH": "/input/ShowDebugInfo0",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Vertical": {
+          "DESCRIPTION": "Moves you forward for values above 0, and backwards for values below 0.",
+          "FULL_PATH": "/input/Vertical",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "Horizontal": {
+          "DESCRIPTION": "Moves you right for values above 0, and left for values below 0.",
+          "FULL_PATH": "/input/Horizontal",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "LookHorizontal": {
+          "DESCRIPTION": "Looks to the right for values above 0, and to the left for values below 0.",
+          "FULL_PATH": "/input/LookHorizontal",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "LookVertical": {
+          "DESCRIPTION": "Looks up for values above 0, and down for values below 0.",
+          "FULL_PATH": "/input/LookVertical",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "SpinHoldCwCcw": {
+          "DESCRIPTION": "Spins the held item Clockwise for values above 0, and Counter-Clockwise for values below 0.",
+          "FULL_PATH": "/input/SpinHoldCwCcw",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "SpinHoldUD": {
+          "DESCRIPTION": "Spins the held item Up for values above 0, and Down for values below 0.",
+          "FULL_PATH": "/input/SpinHoldUD",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "SpinHoldLR": {
+          "DESCRIPTION": "Spins the held item Left for values above 0, and Right for values below 0.",
+          "FULL_PATH": "/input/SpinHoldLR",
+          "ACCESS": 2,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        }
+      }
+    },
+    "usercamera": {
+      "FULL_PATH": "/usercamera",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "Close": {
+          "FULL_PATH": "/usercamera/Close",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Capture": {
+          "FULL_PATH": "/usercamera/Capture",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "CaptureDelayed": {
+          "FULL_PATH": "/usercamera/CaptureDelayed",
+          "ACCESS": 2,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowUIInCamera": {
+          "FULL_PATH": "/usercamera/ShowUIInCamera",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Lock": {
+          "FULL_PATH": "/usercamera/Lock",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            true
+          ]
+        },
+        "LocalPlayer": {
+          "FULL_PATH": "/usercamera/LocalPlayer",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            true
+          ]
+        },
+        "RemotePlayer": {
+          "FULL_PATH": "/usercamera/RemotePlayer",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            true
+          ]
+        },
+        "Environment": {
+          "FULL_PATH": "/usercamera/Environment",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            true
+          ]
+        },
+        "GreenScreen": {
+          "FULL_PATH": "/usercamera/GreenScreen",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "SmoothMovement": {
+          "FULL_PATH": "/usercamera/SmoothMovement",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "LookAtMe": {
+          "FULL_PATH": "/usercamera/LookAtMe",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "AutoLevelRoll": {
+          "FULL_PATH": "/usercamera/AutoLevelRoll",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "AutoLevelPitch": {
+          "FULL_PATH": "/usercamera/AutoLevelPitch",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Flying": {
+          "FULL_PATH": "/usercamera/Flying",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "TriggerTakesPhotos": {
+          "FULL_PATH": "/usercamera/TriggerTakesPhotos",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "DollyPathsStayVisible": {
+          "FULL_PATH": "/usercamera/DollyPathsStayVisible",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "AudioFromCamera": {
+          "FULL_PATH": "/usercamera/AudioFromCamera",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "ShowFocus": {
+          "FULL_PATH": "/usercamera/ShowFocus",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "Streaming": {
+          "FULL_PATH": "/usercamera/Streaming",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "RollWhileFlying": {
+          "FULL_PATH": "/usercamera/RollWhileFlying",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            false
+          ]
+        },
+        "OrientationIsLandscape": {
+          "FULL_PATH": "/usercamera/OrientationIsLandscape",
+          "ACCESS": 3,
+          "TYPE": "T",
+          "VALUE": [
+            true
+          ]
+        },
+        "Zoom": {
+          "FULL_PATH": "/usercamera/Zoom",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            "NaN"
+          ]
+        },
+        "Exposure": {
+          "FULL_PATH": "/usercamera/Exposure",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "FocalDistance": {
+          "FULL_PATH": "/usercamera/FocalDistance",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            2.0
+          ]
+        },
+        "Aperture": {
+          "FULL_PATH": "/usercamera/Aperture",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            15.0
+          ]
+        },
+        "Hue": {
+          "FULL_PATH": "/usercamera/Hue",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            120.0
+          ]
+        },
+        "Saturation": {
+          "FULL_PATH": "/usercamera/Saturation",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            100.0
+          ]
+        },
+        "Lightness": {
+          "FULL_PATH": "/usercamera/Lightness",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            50.0
+          ]
+        },
+        "LookAtMeXOffset": {
+          "FULL_PATH": "/usercamera/LookAtMeXOffset",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "LookAtMeYOffset": {
+          "FULL_PATH": "/usercamera/LookAtMeYOffset",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            0.0
+          ]
+        },
+        "FlySpeed": {
+          "FULL_PATH": "/usercamera/FlySpeed",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            3.0
+          ]
+        },
+        "TurnSpeed": {
+          "FULL_PATH": "/usercamera/TurnSpeed",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            1.0
+          ]
+        },
+        "SmoothingStrength": {
+          "FULL_PATH": "/usercamera/SmoothingStrength",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            5.0
+          ]
+        },
+        "PhotoRate": {
+          "FULL_PATH": "/usercamera/PhotoRate",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            1.0
+          ]
+        },
+        "Duration": {
+          "FULL_PATH": "/usercamera/Duration",
+          "ACCESS": 3,
+          "TYPE": "f",
+          "VALUE": [
+            1.0
+          ]
+        },
+        "Mode": {
+          "FULL_PATH": "/usercamera/Mode",
+          "ACCESS": 3,
+          "TYPE": "i",
+          "VALUE": [
+            0
+          ]
+        },
+        "Pose": {
+          "FULL_PATH": "/usercamera/Pose",
+          "ACCESS": 1,
+          "TYPE": "ffffff",
+          "VALUE": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      }
+    },
+    "chatbox": {
+      "FULL_PATH": "/chatbox",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "input": {
+          "FULL_PATH": "/chatbox/input",
+          "ACCESS": 2,
+          "TYPE": "sTT"
+        },
+        "typing": {
+          "FULL_PATH": "/chatbox/typing",
+          "ACCESS": 2,
+          "TYPE": "s"
+        }
+      }
+    },
+    "avatar": {
+      "FULL_PATH": "/avatar",
+      "ACCESS": 0,
+      "CONTENTS": {
+        "change": {
+          "DESCRIPTION": "Avatar ID, updated whenever the user switches into a valid avatar.",
+          "FULL_PATH": "/avatar/change",
+          "ACCESS": 3,
+          "TYPE": "s",
+          "VALUE": [
+            "avtr_14a07628-b7a2-474f-b0cc-411dd6975e6d"
+          ]
+        },
+        "parameters": {
+          "FULL_PATH": "/avatar/parameters",
+          "ACCESS": 0,
+          "CONTENTS": {
+            "ChestButton_Prox": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_Prox",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "ChestButton_Squish": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_Squish",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "ChestButton_Stretch": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_Stretch",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "ChestButton_Angle": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_Angle",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "ChestButton_IsPosed": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_IsPosed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "ChestButton_IsGrabbed": {
+              "FULL_PATH": "/avatar/parameters/ChestButton_IsGrabbed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "EarRight_Squish": {
+              "FULL_PATH": "/avatar/parameters/EarRight_Squish",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarRight_Stretch": {
+              "FULL_PATH": "/avatar/parameters/EarRight_Stretch",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarRight_Angle": {
+              "FULL_PATH": "/avatar/parameters/EarRight_Angle",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarRight_IsPosed": {
+              "FULL_PATH": "/avatar/parameters/EarRight_IsPosed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "EarRight_IsGrabbed": {
+              "FULL_PATH": "/avatar/parameters/EarRight_IsGrabbed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "EarLeft_Squish": {
+              "FULL_PATH": "/avatar/parameters/EarLeft_Squish",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarLeft_Stretch": {
+              "FULL_PATH": "/avatar/parameters/EarLeft_Stretch",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarLeft_Angle": {
+              "FULL_PATH": "/avatar/parameters/EarLeft_Angle",
+              "ACCESS": 3,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "EarLeft_IsPosed": {
+              "FULL_PATH": "/avatar/parameters/EarLeft_IsPosed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "EarLeft_IsGrabbed": {
+              "FULL_PATH": "/avatar/parameters/EarLeft_IsGrabbed",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "DreamBite": {
+              "FULL_PATH": "/avatar/parameters/DreamBite",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "Marker": {
+                  "FULL_PATH": "/avatar/parameters/DreamBite/Marker",
+                  "ACCESS": 0,
+                  "CONTENTS": {
+                    "LeftHand": {
+                      "FULL_PATH": "/avatar/parameters/DreamBite/Marker/LeftHand",
+                      "ACCESS": 3,
+                      "TYPE": "T",
+                      "VALUE": [
+                        false
+                      ]
+                    }
+                  }
+                },
+                "Grab": {
+                  "FULL_PATH": "/avatar/parameters/DreamBite/Grab",
+                  "ACCESS": 3,
+                  "TYPE": "T",
+                  "VALUE": [
+                    false
+                  ]
+                }
+              }
+            },
+            "VF106_DreamBite": {
+              "FULL_PATH": "/avatar/parameters/VF106_DreamBite",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "Driver": {
+                  "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Driver",
+                  "ACCESS": 0,
+                  "CONTENTS": {
+                    "AllowBite": {
+                      "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Driver/AllowBite",
+                      "ACCESS": 3,
+                      "TYPE": "T",
+                      "VALUE": [
+                        false
+                      ]
+                    },
+                    "MouthOpened": {
+                      "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Driver/MouthOpened",
+                      "ACCESS": 3,
+                      "TYPE": "T",
+                      "VALUE": [
+                        false
+                      ]
+                    }
+                  }
+                },
+                "Manual": {
+                  "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Manual",
+                  "ACCESS": 0,
+                  "CONTENTS": {
+                    "MoveCollider": {
+                      "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Manual/MoveCollider",
+                      "ACCESS": 3,
+                      "TYPE": "T",
+                      "VALUE": [
+                        false
+                      ]
+                    },
+                    "Enabled": {
+                      "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Manual/Enabled",
+                      "ACCESS": 3,
+                      "TYPE": "T",
+                      "VALUE": [
+                        false
+                      ]
+                    }
+                  }
+                },
+                "MoveColliderToMouth": {
+                  "FULL_PATH": "/avatar/parameters/VF106_DreamBite/MoveColliderToMouth",
+                  "ACCESS": 3,
+                  "TYPE": "T",
+                  "VALUE": [
+                    false
+                  ]
+                },
+                "SoundEnabled": {
+                  "FULL_PATH": "/avatar/parameters/VF106_DreamBite/SoundEnabled",
+                  "ACCESS": 3,
+                  "TYPE": "T",
+                  "VALUE": [
+                    true
+                  ]
+                },
+                "Enabled": {
+                  "FULL_PATH": "/avatar/parameters/VF106_DreamBite/Enabled",
+                  "ACCESS": 3,
+                  "TYPE": "T",
+                  "VALUE": [
+                    true
+                  ]
+                }
+              }
+            },
+            "FT": {
+              "FULL_PATH": "/avatar/parameters/FT",
+              "ACCESS": 0,
+              "CONTENTS": {
+                "v2": {
+                  "FULL_PATH": "/avatar/parameters/FT/v2",
+                  "ACCESS": 0,
+                  "CONTENTS": {
+                    "MouthClosed": {
+                      "FULL_PATH": "/avatar/parameters/FT/v2/MouthClosed",
+                      "ACCESS": 3,
+                      "TYPE": "f",
+                      "VALUE": [
+                        0.0
+                      ]
+                    },
+                    "JawOpen": {
+                      "FULL_PATH": "/avatar/parameters/FT/v2/JawOpen",
+                      "ACCESS": 3,
+                      "TYPE": "f",
+                      "VALUE": [
+                        0.0
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "VF_1.1278.0": {
+              "FULL_PATH": "/avatar/parameters/VF_1.1278.0",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "VF_3.10.1": {
+              "FULL_PATH": "/avatar/parameters/VF_3.10.1",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "VF_2022.3.22f1": {
+              "FULL_PATH": "/avatar/parameters/VF_2022.3.22f1",
+              "ACCESS": 3,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "PreviewMode": {
+              "FULL_PATH": "/avatar/parameters/PreviewMode",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                0
+              ]
+            },
+            "InStation": {
+              "FULL_PATH": "/avatar/parameters/InStation",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "Seated": {
+              "FULL_PATH": "/avatar/parameters/Seated",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "GestureRightWeight": {
+              "FULL_PATH": "/avatar/parameters/GestureRightWeight",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "GestureLeftWeight": {
+              "FULL_PATH": "/avatar/parameters/GestureLeftWeight",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "GestureRight": {
+              "FULL_PATH": "/avatar/parameters/GestureRight",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                0
+              ]
+            },
+            "GestureLeft": {
+              "FULL_PATH": "/avatar/parameters/GestureLeft",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                0
+              ]
+            },
+            "Viseme": {
+              "FULL_PATH": "/avatar/parameters/Viseme",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                0
+              ]
+            },
+            "IsAnimatorEnabled": {
+              "FULL_PATH": "/avatar/parameters/IsAnimatorEnabled",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                true
+              ]
+            },
+            "IsOnFriendsList": {
+              "FULL_PATH": "/avatar/parameters/IsOnFriendsList",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "EyeHeightAsMeters": {
+              "FULL_PATH": "/avatar/parameters/EyeHeightAsMeters",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                1.73990571
+              ]
+            },
+            "EyeHeightAsPercent": {
+              "FULL_PATH": "/avatar/parameters/EyeHeightAsPercent",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.320813656
+              ]
+            },
+            "ScaleModified": {
+              "FULL_PATH": "/avatar/parameters/ScaleModified",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "ScaleFactorInverse": {
+              "FULL_PATH": "/avatar/parameters/ScaleFactorInverse",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                1.0
+              ]
+            },
+            "ScaleFactor": {
+              "FULL_PATH": "/avatar/parameters/ScaleFactor",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                1.0
+              ]
+            },
+            "VelocityMagnitude": {
+              "FULL_PATH": "/avatar/parameters/VelocityMagnitude",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "Earmuffs": {
+              "FULL_PATH": "/avatar/parameters/Earmuffs",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "Voice": {
+              "FULL_PATH": "/avatar/parameters/Voice",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "MuteSelf": {
+              "FULL_PATH": "/avatar/parameters/MuteSelf",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "VRMode": {
+              "FULL_PATH": "/avatar/parameters/VRMode",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                0
+              ]
+            },
+            "TrackingType": {
+              "FULL_PATH": "/avatar/parameters/TrackingType",
+              "ACCESS": 1,
+              "TYPE": "i",
+              "VALUE": [
+                3
+              ]
+            },
+            "Upright": {
+              "FULL_PATH": "/avatar/parameters/Upright",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                1.0
+              ]
+            },
+            "AFK": {
+              "FULL_PATH": "/avatar/parameters/AFK",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                false
+              ]
+            },
+            "Grounded": {
+              "FULL_PATH": "/avatar/parameters/Grounded",
+              "ACCESS": 1,
+              "TYPE": "T",
+              "VALUE": [
+                true
+              ]
+            },
+            "AngularY": {
+              "FULL_PATH": "/avatar/parameters/AngularY",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "VelocityZ": {
+              "FULL_PATH": "/avatar/parameters/VelocityZ",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "VelocityY": {
+              "FULL_PATH": "/avatar/parameters/VelocityY",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            },
+            "VelocityX": {
+              "FULL_PATH": "/avatar/parameters/VelocityX",
+              "ACCESS": 1,
+              "TYPE": "f",
+              "VALUE": [
+                0.0
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
