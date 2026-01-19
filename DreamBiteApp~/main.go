@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -71,6 +73,38 @@ func run(log *slog.Logger) error {
 	defer func() {
 		_ = oscClient.Close()
 	}()
+
+	// FIXME: use me
+	{
+		resolver, err := zeroconf.NewResolver(nil)
+		if err != nil {
+			return fmt.Errorf("create resolver: %w", err)
+		}
+
+		entries := make(chan *zeroconf.ServiceEntry)
+		go func(results <-chan *zeroconf.ServiceEntry) {
+			for entry := range results {
+				if !strings.HasPrefix(entry.Instance, "VRChat-Client") {
+					continue
+				}
+
+				// time=2026-01-20T00:44:43.852+04:00 level=DEBUG msg="Found service" service="&{ServiceRecord:{Instance:VRChat-Client-525252 Service:_oscjson._tcp Domain:local. serviceName:_oscjson._tcp.local. serviceInstanceName:VRChat-Client-525252._oscjson._tcp.local. serviceTypeName:_services._dns-sd._udp.local.} HostName:VRChat-Client-525252.oscjson.local. Port:61622 Text:[txtvers=1] TTL:4500 AddrIPv4:[127.0.0.1] AddrIPv6:[]}"
+				// time=2026-01-20T00:44:43.855+04:00 level=DEBUG msg="Found service" service="&{ServiceRecord:{Instance:VRChat-Client-525252 Service:_osc._udp Domain:local. serviceName:_osc._udp.local. serviceInstanceName:VRChat-Client-525252._osc._udp.local. serviceTypeName:_services._dns-sd._udp.local.} HostName:VRChat-Client-525252.osc.local. Port:9000 Text:[txtvers=1] TTL:4500 AddrIPv4:[192.168.10.12] AddrIPv6:[]}"
+				log.Debug("Found service", slog.Any("service", entry))
+			}
+			log.Warn("No more entries.")
+		}(entries)
+
+		err = resolver.Browse(context.Background(), "_oscjson._tcp", "local.", entries)
+		if err != nil {
+			return fmt.Errorf("browse for OSCQuery: %w", err)
+		}
+
+		err = resolver.Browse(context.Background(), "_osc._udp", "local.", entries)
+		if err != nil {
+			return fmt.Errorf("browse for OSCQuery: %w", err)
+		}
+	}
 
 	// Setup OSC.
 	oscServerAddr, err := net.ResolveUDPAddr("udp", "0.0.0.0:0")
