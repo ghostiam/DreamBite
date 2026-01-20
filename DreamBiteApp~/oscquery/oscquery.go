@@ -8,63 +8,64 @@ import (
 	"sync"
 )
 
-type OscQuery[Handler any] struct {
+type OscQuery struct {
 	mx       sync.RWMutex `exhaustruct:"optional"`
-	tree     *nodeTree[Handler]
+	tree     *Node
 	hostInfo *HostInfo
 }
 
-func New[Handler any]() (*OscQuery[Handler], error) {
-	return &OscQuery[Handler]{
-		tree:     newNodeTree[Handler](),
+func New() *OscQuery {
+	return &OscQuery{
+		tree:     NewNodeTree(),
 		hostInfo: nil,
-	}, nil
+	}
 }
 
-func (o *OscQuery[Handler]) AddEndpoint(ep *Endpoint[Handler]) error {
+func (o *OscQuery) AddNode(n *Node) error {
 	o.mx.RLock()
 	defer o.mx.RUnlock()
 
-	return o.tree.add(ep)
+	return o.tree.Add(n)
 }
 
-func (o *OscQuery[Handler]) GetEndpoint(fullPath string) (Node[Handler], bool) {
+func (o *OscQuery) GetNode(fullPath string) (*Node, bool) {
 	o.mx.RLock()
 	defer o.mx.RUnlock()
-	return o.tree.find(fullPath)
+
+	return o.tree.Find(fullPath)
 }
 
-func (o *OscQuery[Handler]) SetHostInfo(info *HostInfo) {
+func (o *OscQuery) SetHostInfo(info *HostInfo) {
 	o.mx.Lock()
 	defer o.mx.Unlock()
 
 	o.hostInfo = info
 }
 
-func (o *OscQuery[Handler]) HostInfo() *HostInfo {
+func (o *OscQuery) HostInfo() *HostInfo {
 	o.mx.RLock()
 	defer o.mx.RUnlock()
 
 	return o.hostInfo
 }
 
-func (o *OscQuery[Handler]) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (o *OscQuery) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strings.Contains(r.RequestURI, "HOST_INFO") {
 		o.handleHostInfo(w, r)
 		return
 	}
 
 	path := r.URL.Path
-	n, ok := o.tree.find(path)
+	n, ok := o.tree.Find(path)
 	if !ok {
 		http.NotFound(w, r)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(n)
+	_ = json.NewEncoder(w).Encode(n) //nolint:errchkjson
 }
 
-func (o *OscQuery[Handler]) handleHostInfo(w http.ResponseWriter, r *http.Request) {
+func (o *OscQuery) handleHostInfo(w http.ResponseWriter, r *http.Request) {
 	hostInfo := o.HostInfo()
 	if hostInfo == nil {
 		http.NotFound(w, r)
@@ -82,29 +83,14 @@ func (o *OscQuery[Handler]) handleHostInfo(w http.ResponseWriter, r *http.Reques
 
 	w.Header().Set("Content-Type", "application/json")
 
-	if hostInfo.OscIP != "" {
-		hostIP = hostInfo.OscIP
+	if hostInfo.OscIP == "" {
+		hostInfo.OscIP = hostIP
 	}
-	oscTransport := "UDP"
-	if hostInfo.OscTransport == "TCP" {
-		oscTransport = "TCP"
+	if hostInfo.OscTransport != "TCP" {
+		hostInfo.OscTransport = "UDP"
 	}
 
-	_ = json.NewEncoder(w).Encode(struct {
-		Name         string          `json:"NAME,omitempty"`
-		OscIP        string          `json:"OSC_IP,omitempty"`
-		OscPort      int             `json:"OSC_PORT,omitempty"`
-		OscTransport string          `json:"OSC_TRANSPORT,omitempty"`
-		Extensions   map[string]bool `json:"EXTENSIONS"`
-	}{
-		Name:         hostInfo.Name,
-		OscPort:      hostInfo.OscPort,
-		OscIP:        hostIP,
-		OscTransport: oscTransport,
-		Extensions: map[string]bool{
-			"ACCESS": true,
-			"VALUE":  true,
-		},
-	})
+	//nolint:errchkjson
+	_ = json.NewEncoder(w).Encode(hostInfo)
 	return
 }

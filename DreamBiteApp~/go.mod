@@ -8,6 +8,7 @@ require (
 	github.com/go-chi/chi/v5 v5.2.4
 	github.com/grandcat/zeroconf v1.0.0
 	github.com/scgolang/osc v0.11.1
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
@@ -15,9 +16,11 @@ require (
 	github.com/imdario/go-ulid v0.0.0-20180116185620-aeb52bf96595 // indirect
 	github.com/miekg/dns v1.1.70 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/mod v0.32.0 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/tools v0.41.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

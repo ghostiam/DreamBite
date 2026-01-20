@@ -1,7 +1,6 @@
 package oscquery
 
 import (
-	"errors"
 	"strconv"
 )
 
@@ -46,33 +45,11 @@ const (
 	TypeBool   Type = "T"
 )
 
-type Endpoint[Handler any] struct {
-	FullPath     string
-	Access       Access
-	Type         Type
-	DefaultValue []any  `exhaustruct:"optional"`
-	Description  string `exhaustruct:"optional"`
-	Handler      Handler
-}
-
-func (ep *Endpoint[Handler]) Validate() error {
-	if ep.FullPath == "" {
-		return errors.New("path cannot be empty")
-	}
-	if ep.Access == AccessNone {
-		return errors.New("access cannot be none")
-	}
-	if ep.Type == "" {
-		return errors.New("type cannot be empty")
-	}
-	return nil
-}
-
+//nolint:tagliatelle
 type HostInfo struct {
-	Name string
-	// OscIP is optional. Leave empty to use server IP.
-	OscIP   string `exhaustruct:"optional"`
-	OscPort int
-	// OscTransport should be either "UDP" or "TCP". Default is UDP.
-	OscTransport string `exhaustruct:"optional"`
+	Name         string          `json:"NAME,omitempty"`
+	OscIP        string          `json:"OSC_IP,omitempty"`
+	OscPort      int             `json:"OSC_PORT,omitempty"`
+	OscTransport string          `json:"OSC_TRANSPORT,omitempty"`
+	Extensions   map[string]bool `json:"EXTENSIONS"`
 }
