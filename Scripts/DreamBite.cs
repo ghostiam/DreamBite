@@ -15,12 +15,11 @@ using VRC.SDKBase;
 using VRC.SDKBase.Editor.BuildPipeline;
 
 // TODO:
-//  НЕ РАБОТАЕТ ЛЕВАЯ РУКА!!!
 //  Create a section in the script called "references" where links to animations and objects will be listed. 
 //  Add open mouth duration setting through prefab.
 //  Create handProxy and mouthTarget automatically (as it was initially).
 //  If the objects are baked into a prefab, delete them and create new ones, otherwise, they will not be able to be moved to the bones.
-//  Добавить авто отключение конфликтующих физбонс в радиусе укуса.
+//  Add detect and auto disable conflicting physical bones within bite radius.
 
 namespace GhostIAm.DreamBite
 {
