@@ -22,6 +22,10 @@ func (app *App) setupOSCDispatcher(oscDispatcher *oscQueryDispatcher) error {
 			return errors.New("VRChat OSC address not set")
 		}
 
+		if hand == "" {
+			hand = HandRight
+		}
+
 		// Send GrabRight in response
 		resp := osc.Message{
 			Address:   "/input/Grab" + string(hand),
@@ -94,6 +98,10 @@ func (app *App) setupOSCDispatcher(oscDispatcher *oscQueryDispatcher) error {
 
 			// Update value
 			node.Value = []any{val}
+
+			app.updateAvatar(func(a *Avatar) {
+				a.Grabbed = val
+			})
 
 			av := app.avatar()
 			e = sendGrab(val, av.HandCollider)
