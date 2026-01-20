@@ -383,8 +383,13 @@ func (app *App) getVRCOSCQueryNode(ctx context.Context, method string) (*oscquer
 		_ = resp.Body.Close()
 	}()
 
+	r, err := vrc.FixJSONReader(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("fix JSON reader: %w", err)
+	}
+
 	var node oscquery.Node
-	err = json.NewDecoder(resp.Body).Decode(&node)
+	err = json.NewDecoder(r).Decode(&node)
 	if err != nil {
 		return nil, fmt.Errorf("decode: %w", err)
 	}

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -88,17 +89,9 @@ func GetAvatarConfig(avatarID string) (*AvatarConfig, error) {
 		_ = file.Close()
 	}()
 
-	r := bufio.NewReader(file)
-
-	// Skip until '{'.
-	_, err = r.ReadBytes('{')
+	r, err := FixJSONReader(file)
 	if err != nil {
-		return nil, fmt.Errorf("read until '{': %w", err)
-	}
-	// Move back.
-	err = r.UnreadByte()
-	if err != nil {
-		return nil, fmt.Errorf("unread byte: %w", err)
+		return nil, fmt.Errorf("fix JSON reader: %w", err)
 	}
 
 	var cfg AvatarConfig
@@ -108,4 +101,21 @@ func GetAvatarConfig(avatarID string) (*AvatarConfig, error) {
 	}
 
 	return &cfg, nil
+}
+
+func FixJSONReader(f io.Reader) (*bufio.Reader, error) {
+	r := bufio.NewReader(f)
+
+	// Skip until '{'.
+	_, err := r.ReadBytes('{')
+	if err != nil {
+		return nil, fmt.Errorf("read until '{': %w", err)
+	}
+	// Move back.
+	err = r.UnreadByte()
+	if err != nil {
+		return nil, fmt.Errorf("unread byte: %w", err)
+	}
+
+	return r, nil
 }
