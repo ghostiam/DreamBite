@@ -34,16 +34,6 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: Manual Enable
-    icon: {fileID: 0}
-    type: 102
-    parameter:
-      name: DreamBite/Manual/Enabled
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
   - name: Manual Move Collider
     icon: {fileID: 0}
     type: 102
